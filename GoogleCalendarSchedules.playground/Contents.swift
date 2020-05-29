@@ -109,17 +109,11 @@ func getAvailableMeetingTimes(person1: Person, person2: Person, minimumMeetingDu
                 endsAt = timePerson2.endsAt
             }
             
-            if startsAt.minutes < endsAt.minutes {
+            if startsAt.minutes < endsAt.minutes, // Check if is a valid available time interval
+                (endsAt.minutes - startsAt.minutes > minimumMeetingDuration) { // Check if has at least the minimum required meeting duration
                 let availableTime: TimeBounds = (startsAt, endsAt)
                 availableMeetingTimes.append(availableTime)
             }
-        }
-    }
-    
-    // O(N)
-    for (i, time) in availableMeetingTimes.enumerated().reversed() {
-        if (time.endsAt.minutes - time.startsAt.minutes) < minimumMeetingDuration {
-            availableMeetingTimes.remove(at: i)
         }
     }
     
